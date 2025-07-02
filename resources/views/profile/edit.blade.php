@@ -152,7 +152,7 @@
 
                 <div>
                     <label for="phone" class="custom-label">{{ __('Номер телефона') }}</label>
-                    <input id="phone" name="phone" type="text" class="mt-1 block w-full custom-input" value="{{ old('phone', $user->phone) }}" autocomplete="tel" />
+                    <input id="phone" name="phone" type="text" class="mt-1 block w-full custom-input" value="{{ old('phone', $user->phone) }}" autocomplete="tel"  maxlength="11" pattern="[0-9]{11}" />
                     @error('phone')
                         <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                     @enderror

@@ -163,12 +163,12 @@
             <article class="flex gap-5 max-md:flex-col">
                 <section class="w-[56%] max-md:ml-0 max-md:w-full flex">
                     <div class="w-full mr-4">
-                        <img src="{{ asset('' . $product->image) }}"
+                        <img src="{{ asset('/storage/' . $product->image) }}"
                             class="object-cover w-full h-full rounded-md" id="main-image" alt="{{ $product->name }}" />
                     </div>
 
                     <div class="small-images w-[30%]">
-                        <img src="{{ asset('' . $product->image) }}" class="small-image rounded-md"
+                        <img src="{{ asset('/storage/' . $product->image) }}" class="small-image rounded-md"
                             onclick="changeMainImage(this.src)" alt="{{ $product->name }} - Основное изображение" />
 
                         @foreach($product->images ?? [] as $img)

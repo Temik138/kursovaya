@@ -177,7 +177,7 @@
       <section class="product-item mt-5 p-4 rounded-lg" data-id="{{ $item->id }}">
       <div class="flex flex-col md:flex-row gap-4">
       <div class="flex flex-col md:flex-row gap-4 w-full md:w-2/3">
-       <img src="{{ asset('' . $item->product->image) }}" alt="{{ $item->product->name }}"
+       <img src="{{ asset('/storage/' . $item->product->image) }}" alt="{{ $item->product->name }}"
         class="product-image w-20 h-24 md:w-24 md:h-28 object-contain" />
         <div class="flex flex-col">
         <h3 class="text-lg md:text-xl">{{ $item->product->name }}</h3>
