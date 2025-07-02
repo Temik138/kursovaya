@@ -33,6 +33,9 @@
                             <a href="{{ route('admin.categories.index') }}" class="text-gray-300 hover:bg-neutral-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                                 Категории
                             </a>
+                            <a href="{{ route('admin.orders.index') }}" class="text-gray-300 hover:bg-neutral-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                                Заказы
+                            </a>
                         </div>
                     </div>
                 </div>

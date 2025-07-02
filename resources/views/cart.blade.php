@@ -244,7 +244,7 @@
         <form action="{{ route('checkout.placeOrder') }}" method="POST">
             @csrf
             <button type="submit"
-                class="checkout-btn px-6 py-4 text-base mt-10 font-semibold text-white rounded-md bg-zinc-600 bg-opacity-70 w-full md:w-40">
+                class="checkout-btn px-6 py-4 text-base mt-10 font-semibold text-white rounded-md bg-zinc-600 bg-opacity-70 w-full md:w-150">
                 Оформить заказ
             </button>
         </form>

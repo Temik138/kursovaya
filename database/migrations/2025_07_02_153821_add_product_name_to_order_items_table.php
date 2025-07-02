@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
-            $table->string('status')->default('ожидание'); 
-            $table->decimal('total_amount', 10, 2);
-            $table->timestamps(); 
+        Schema::table('order_items', function (Blueprint $table) {
+            $table->string('product_name')->after('product_id');
         });
     }
 
@@ -25,6 +21,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('orders');
+        Schema::table('order_items', function (Blueprint $table) {
+            // Удаляем столбец при откате миграции
+            $table->dropColumn('product_name');
+        });
     }
 };

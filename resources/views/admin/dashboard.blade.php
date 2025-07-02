@@ -10,6 +10,9 @@
                     <a href="{{ route('admin.categories.index') }}" class="block p-4 bg-neutral-700 hover:bg-neutral-600 rounded transition">
                         Управление категориями
                     </a>
+                    <a href="{{ route('admin.orders.index') }}" class="block p-4 bg-neutral-700 hover:bg-neutral-600 rounded transition">
+                        Управление заказами
+                    </a>
                 </div>
             </div>
         </div>
