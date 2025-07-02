@@ -1,6 +1,5 @@
 <?php
 
-// app/Models/User.php
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -20,7 +19,7 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-    public function orders(): HasMany
+    public function orders()
     {
         return $this->hasMany(Order::class);
     }

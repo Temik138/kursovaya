@@ -239,13 +239,22 @@
       </div>
       </div>
 
-      <!-- Кнопка оформления -->
       <div class="flex justify-center mt-10">
-      <button type="submit"
-        class="checkout-btn px-6 py-4 text-base mt-10 font-semibold text-white rounded-md bg-zinc-600 bg-opacity-70 w-full md:w-40">
-        Оформить
-      </button>
-      </div>
+    @if(Auth::check()) 
+        <form action="{{ route('checkout.placeOrder') }}" method="POST">
+            @csrf
+            <button type="submit"
+                class="checkout-btn px-6 py-4 text-base mt-10 font-semibold text-white rounded-md bg-zinc-600 bg-opacity-70 w-full md:w-40">
+                Оформить заказ
+            </button>
+        </form>
+    @else
+        <p class="text-white text-lg text-center">
+            <a href="{{ route('login') }}" class="text-blue-400 hover:underline">Войдите</a> или
+            <a href="{{ route('register') }}" class="text-blue-400 hover:underline">зарегистрируйтесь</a>, чтобы оформить заказ.
+        </p>
+    @endif
+</div>
     @endif
     </div>
   </main>

@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Order; 
+use App\Models\OrderItem; 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session; 
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -165,5 +168,59 @@ public function index()
             $count += $item['quantity'];
         }
         return $count;
+    }
+    public function placeOrder(Request $request)
+    {
+        // Убедитесь, что пользователь авторизован
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Для оформления заказа необходимо войти в систему.');
+        }
+
+        $user = Auth::user();
+        $cart = Session::get('cart', []);
+
+        if (empty($cart)) {
+            return redirect()->route('cart')->with('error', 'Ваша корзина пуста.');
+        }
+
+        $totalAmount = 0;
+        foreach ($cart as $itemKey => $details) {
+            // Извлекаем product_id из itemKey, если он составной (например, "id-size")
+            $productId = explode('-', $itemKey)[0];
+            $product = Product::find($productId);
+            if ($product) {
+                // Используем актуальную цену товара на момент оформления заказа
+                $totalAmount += $product->price * $details['quantity'];
+            }
+        }
+
+        // Создаем новый заказ
+        $order = Order::create([
+            'user_id' => $user->id,
+            'total_amount' => $totalAmount,
+            'status' => 'pending', // Начальный статус заказа
+        ]);
+
+        // Добавляем позиции заказа (товары)
+        foreach ($cart as $itemKey => $details) {
+             // Извлекаем product_id из itemKey
+            $productId = explode('-', $itemKey)[0];
+            $product = Product::find($productId);
+
+            if ($product) {
+                OrderItem::create([
+                    'order_id' => $order->id,
+                    'product_id' => $product->id,
+                    'product_name' => $product->name, // Сохраняем имя продукта на момент заказа
+                    'price' => $product->price,       // Сохраняем цену продукта на момент заказа
+                    'quantity' => $details['quantity'],
+                ]);
+            }
+        }
+
+        // Очищаем корзину после успешного оформления заказа
+        Session::forget('cart');
+
+        return redirect()->route('profile.edit')->with('status', 'Заказ успешно оформлен! Вы можете просмотреть его в личном кабинете.');
     }
 }

@@ -18,23 +18,24 @@ class ProfileController extends Controller
     {
         return view('profile.edit', [
             'user' => $request->user(),
+            'mustVerifyEmail' => $request->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail,
+            'status' => session('status'),
         ]);
     }
 
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request)
+    public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $request->user()->fill($request->validated());
     
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
-    
-        // Добавляем сохранение телефона
+
         $request->user()->phone = $request->phone;
-    
+        
         $request->user()->save();
     
         return redirect()->route('profile.edit')->with('status', 'profile-updated');

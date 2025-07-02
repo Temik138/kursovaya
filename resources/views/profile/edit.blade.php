@@ -79,6 +79,30 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
+        .profile-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 10px;
+        }
+        .tab-link {
+            padding: 10px 20px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            border-radius: 5px 5px 0 0;
+            transition: background-color 0.3s ease;
+        }
+
+        .tab-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .tab-link.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-bottom: 2px solid #ffd700;
+        }
     </style>
 </head>
 <body>
@@ -133,6 +157,11 @@
             <form method="post" action="{{ route('profile.update') }}" class="space-y-6">
                 @csrf
                 @method('patch')
+
+            <nav class="profile-tabs">
+                    <a href="{{ route('profile.edit') }}" class="tab-link @if(Request::routeIs('profile.edit')) active @endif">Профиль</a>
+                    <a href="{{ route('profile.orders.index') }}" class="tab-link @if(Request::routeIs('profile.orders.index')) active @endif">Мои заказы</a>
+                </nav>
 
                 <div>
                     <label for="name" class="custom-label">{{ __('Имя') }}</label>
