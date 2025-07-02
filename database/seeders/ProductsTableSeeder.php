@@ -24,17 +24,22 @@ class ProductsTableSeeder extends Seeder
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        $categories = [
-            'Ветровки',
-            'Кофты и футболки',
-            'Штаны и шорты',
-            'Обувь',
-            'Головные уборы',
+        // Определяем категории и их иконки
+        $categoryData = [
+            'Ветровки' => 'images/vet.png', // Используйте путь относительно storage/app/public
+            'Кофты и футболки' => 'images/kof.png',
+            'Штаны и шорты' => 'images/shtan.png',
+            'Обувь' => 'images/kr.png',
+            'Головные уборы' => 'images/kep.png',
         ];
 
         $categoryModels = [];
-        foreach ($categories as $categoryName) {
-            $categoryModels[$categoryName] = Category::create(['name' => $categoryName]);
+        foreach ($categoryData as $categoryName => $iconPath) {
+            $categoryModels[$categoryName] = Category::create([
+                'name' => $categoryName,
+                'slug' => Str::slug($categoryName), // Добавьте slug для категорий
+                'icon' => $iconPath, // Задаем путь к иконке
+            ]);
         }
 
         $productsData = [
@@ -50,7 +55,7 @@ class ProductsTableSeeder extends Seeder
                 'in_stock' => true,
                 'brand' => 'RedFox',
                 'category' => 'Ветровки',
-                'sizes' => ['S', 'M', 'L', 'XL'], 
+                'sizes' => ['S', 'M', 'L', 'XL'],
             ],
             [
                 'name' => 'Кроссовки Salomon мужские',
@@ -64,7 +69,7 @@ class ProductsTableSeeder extends Seeder
                 'in_stock' => true,
                 'brand' => 'Salomon',
                 'category' => 'Обувь',
-                'sizes' => ['40', '41', '42', '43', '44'], 
+                'sizes' => ['40', '41', '42', '43', '44'],
             ],
             [
                 'name' => 'Шорты Puma',
@@ -78,7 +83,7 @@ class ProductsTableSeeder extends Seeder
                 'in_stock' => true,
                 'brand' => 'Puma',
                 'category' => 'Штаны и шорты',
-                'sizes' => ['S', 'M', 'L', 'XL'], 
+                'sizes' => ['S', 'M', 'L', 'XL'],
             ],
             [
                 'name' => 'Футболка Manto',
@@ -92,7 +97,7 @@ class ProductsTableSeeder extends Seeder
                 'in_stock' => true,
                 'brand' => 'Manto',
                 'category' => 'Кофты и футболки',
-                'sizes' => ['XS', 'S', 'M', 'L', 'XL', 'XXL'], 
+                'sizes' => ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
             ],
             [
                 'name' => 'Кепка Manto',
@@ -105,7 +110,7 @@ class ProductsTableSeeder extends Seeder
                 'in_stock' => true,
                 'brand' => 'Manto',
                 'category' => 'Головные уборы',
-                'sizes' => ['OS'], 
+                'sizes' => ['OS'],
             ],
             [
                 'name' => 'Кофта HardTrain',
@@ -118,7 +123,7 @@ class ProductsTableSeeder extends Seeder
                 'in_stock' => true,
                 'brand' => 'HardTrain',
                 'category' => 'Кофты и футболки',
-                'sizes' => ['S', 'M', 'L', 'XL'], 
+                'sizes' => ['S', 'M', 'L', 'XL'],
             ],
             [
                 'name' => 'Кофта HardCore',
@@ -132,7 +137,7 @@ class ProductsTableSeeder extends Seeder
                 'in_stock' => true,
                 'brand' => 'HardCore',
                 'category' => 'Кофты и футболки',
-                'sizes' => ['S', 'M', 'L', 'XL', 'XXL'], 
+                'sizes' => ['S', 'M', 'L', 'XL', 'XXL'],
             ],
             [
                 'name' => 'Кроссовки Tyr Torf',
@@ -146,7 +151,7 @@ class ProductsTableSeeder extends Seeder
                 'in_stock' => true,
                 'brand' => 'Tyrtorf',
                 'category' => 'Обувь',
-                'sizes' => ['40', '41', '42', '43', '44'], 
+                'sizes' => ['40', '41', '42', '43', '44'],
             ],
             [
                 'name' => 'Шапка Manto',
@@ -159,7 +164,7 @@ class ProductsTableSeeder extends Seeder
                 'in_stock' => true,
                 'brand' => 'Manto',
                 'category' => 'Головные уборы',
-                'sizes' => ['OS'], 
+                'sizes' => ['OS'],
             ],
             [
                 'name' => 'Штаны HardCore',
@@ -187,7 +192,7 @@ class ProductsTableSeeder extends Seeder
                 'in_stock' => true,
                 'brand' => 'Manto',
                 'category' => 'Штаны и шорты',
-                'sizes' => ['S', 'M', 'L', 'XL'], 
+                'sizes' => ['S', 'M', 'L', 'XL'],
             ],
             [
                 'name' => 'Шорты Manto мужские',
@@ -201,7 +206,7 @@ class ProductsTableSeeder extends Seeder
                 'in_stock' => true,
                 'brand' => 'Manto',
                 'category' => 'Штаны и шорты',
-                'sizes' => ['S', 'M', 'L', 'XL'], 
+                'sizes' => ['S', 'M', 'L', 'XL'],
             ],
             [
                 'name' => 'Шорты Salomon женские',
@@ -215,7 +220,7 @@ class ProductsTableSeeder extends Seeder
                 'in_stock' => true,
                 'brand' => 'Salomon',
                 'category' => 'Штаны и шорты',
-                'sizes' => ['XS', 'S', 'M', 'L'], 
+                'sizes' => ['XS', 'S', 'M', 'L'],
             ],
             [
                 'name' => 'Тапки Reebok UFC',
@@ -229,7 +234,7 @@ class ProductsTableSeeder extends Seeder
                 'in_stock' => true,
                 'brand' => 'Reebok',
                 'category' => 'Обувь',
-                'sizes' => ['40', '41', '42', '43', '44'], 
+                'sizes' => ['40', '41', '42', '43', '44'],
             ],
             [
                 'name' => 'Ветровка BadBoy',
@@ -242,7 +247,7 @@ class ProductsTableSeeder extends Seeder
                 'in_stock' => true,
                 'brand' => 'BadBoy',
                 'category' => 'Ветровки',
-                'sizes' => ['M', 'L', 'XL'], 
+                'sizes' => ['M', 'L', 'XL'],
             ],
             [
                 'name' => 'Ветровка Sitka',
@@ -255,7 +260,7 @@ class ProductsTableSeeder extends Seeder
                 'in_stock' => true,
                 'brand' => 'Sitka',
                 'category' => 'Ветровки',
-                'sizes' => ['S', 'M', 'L', 'XL', 'XXL'], 
+                'sizes' => ['S', 'M', 'L', 'XL', 'XXL'],
             ],
         ];
 
@@ -269,7 +274,7 @@ class ProductsTableSeeder extends Seeder
                 'in_stock' => $data['in_stock'],
                 'brand' => $data['brand'],
                 'category_id' => $categoryModels[$data['category']]->id,
-                'size' => $data['sizes'], 
+                'size' => $data['sizes'],
             ]);
 
             foreach ($data['images'] as $index => $imageUrl) {

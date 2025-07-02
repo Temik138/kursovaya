@@ -11,12 +11,10 @@ use App\Http\Controllers\Admin\CategoryCrudController;
 use App\Http\Controllers\OrderController; 
 use App\Http\Controllers\Admin\OrderController as AdminOrderController; 
 use Illuminate\Support\Facades\Auth; 
+use App\Http\Controllers\HomeController; 
 
 
-Route::get('/', function () {
-    return view('index');
-})->name('index');
-
+Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/map', function () {
     return view('map');
 })->name('map');

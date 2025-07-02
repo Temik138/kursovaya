@@ -29,16 +29,30 @@ class CategoryCrudController extends Controller
     /**
      * Store a newly created category in storage.
      */
-    public function store(Request $request)
+     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:categories,name',
+            'name' => 'required|string|max:255',
+            'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Правила для загрузки изображения
+            // Добавьте другие правила валидации, если есть другие поля
         ]);
 
-        $category = Category::create([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name),
-        ]);
+        $data = $request->all();
+
+        // Обработка загрузки изображения/иконки
+        if ($request->hasFile('icon')) {
+            // Сохраняем изображение в storage/app/public/category_icons
+            // и получаем путь относительно 'public'
+            $imagePath = $request->file('icon')->store('category_icons', 'public');
+            $data['icon'] = $imagePath; // Сохраняем этот путь в поле 'icon'
+        }
+
+        // Если вы генерируете slug вручную
+        if (!isset($data['slug']) || empty($data['slug'])) {
+            $data['slug'] = Str::slug($data['name']);
+        }
+
+        Category::create($data);
 
         return redirect()->route('admin.categories.index')->with('success', 'Категория успешно добавлена!');
     }
@@ -65,13 +79,28 @@ class CategoryCrudController extends Controller
     public function update(Request $request, Category $category)
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:categories,name,' . $category->id,
+            'name' => 'required|string|max:255',
+            'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $category->update([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name),
-        ]);
+        $data = $request->all();
+
+        // Обработка загрузки нового изображения/иконки
+        if ($request->hasFile('icon')) {
+            // Удаляем старое изображение, если оно существует
+            if ($category->icon) {
+                \Storage::disk('public')->delete($category->icon);
+            }
+            $imagePath = $request->file('icon')->store('category_icons', 'public');
+            $data['icon'] = $imagePath;
+        }
+
+        // Если вы генерируете slug вручную при обновлении
+        if (isset($data['name']) && (!isset($data['slug']) || empty($data['slug']))) {
+            $data['slug'] = Str::slug($data['name']);
+        }
+
+        $category->update($data);
 
         return redirect()->route('admin.categories.index')->with('success', 'Категория успешно обновлена!');
     }
