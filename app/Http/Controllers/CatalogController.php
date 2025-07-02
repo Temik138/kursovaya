@@ -17,6 +17,7 @@ class CatalogController extends Controller
 
         $products = Product::query()
             ->with('category') 
+            ->where('in_stock', true) 
             ->whereBetween('price', [$minPrice, $maxPrice]); 
 
         if (!empty($categoryIds)) {

@@ -23,6 +23,7 @@ class Product extends Model
     ];
     protected $casts = [
         'size' => 'array',
+        'in_stock' => 'boolean',
 
     ];
 

@@ -166,15 +166,10 @@
                                                    {{ in_array($category->id, $categoryIds) ? 'checked' : '' }}>
                                             {{-- Пока оставим картинки как есть, но в идеале они тоже должны быть в БД --}}
                                             @if($category->name === 'Ветровки')
-                                                <img src="/images/vet.png" class="w-6 h-6 object-contain" alt="Ветровки">
                                             @elseif($category->name === 'Кофты и футболки')
-                                                <img src="/images/kof.png" class="w-6 h-10 object-contain" alt="Кофты">
                                             @elseif($category->name === 'Штаны и шорты')
-                                                <img src="/images/shtan.png" class="w-6 h-10 object-contain" alt="Штаны и шорты">
                                             @elseif($category->name === 'Обувь')
-                                                <img src="/images/kr.png" class="w-8 h-10 object-contain" alt="Обувь">
                                             @elseif($category->name === 'Головные уборы')
-                                                <img src="/images/kep.png" class="w-6 h-6 object-contain" alt="Головные уборы">
                                             @endif
                                             <span>{{ $category->name }}</span>
                                         </label>
@@ -250,7 +245,7 @@
                         @forelse($products as $product)
                             <a href="{{ route('product.show', $product->slug) }}" class="product-item">
                                 <article class="product-card flex flex-col p-3 text-xl text-white rounded-md border border-stone-500 h-full">
-                                   <img src="{{ asset('' . $product->image) }}"
+                                   <img src="{{ asset('/storage/' . $product->image) }}"
                                             class="mx-auto aspect-square w-[140px]" alt="{{ $product->name }}">
                                     <h3 class="mt-3 text-center">{{ $product->name }}</h3>
                                     <p class="self-center mt-2">{{ number_format($product->price, 0, '.', ' ') }}р</p>

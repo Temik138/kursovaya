@@ -49,7 +49,7 @@
                                   file:bg-blue-50 file:text-blue-700
                                   hover:file:bg-blue-100" id="image" name="image">
                 @if ($product->image)
-                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
+                    <img src="{{ asset('/storage/' . $product->image) }}" alt="{{ $product->name }}"
                         class="mt-2 w-32 h-32 object-cover rounded">
                 @else
                     <p class="text-gray-400 text-sm mt-2">Текущее изображение отсутствует.</p>

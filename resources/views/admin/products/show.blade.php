@@ -13,7 +13,7 @@
             @if ($product->image)
                 <div class="mb-4">
                     <strong>Изображение:</strong>
-                     <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
+                     <img src="{{ asset('/storage/' . $product->image) }}" alt="{{ $product->name }}"
                         class="mt-2 w-48 h-48 object-cover rounded">
                 </div>
             @endif

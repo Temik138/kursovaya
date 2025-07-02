@@ -43,7 +43,7 @@
                             <td class="py-2 px-4">{{ $product->id }}</td>
                             <td class="py-2 px-4">
                                 @if ($product->image)
-                                   <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
+                                   <img src="{{ asset('/storage/' . $product->image) }}" alt="{{ $product->name }}"
                                         class="w-16 h-16 object-cover rounded">
                                 @else
                                     Нет изображения
